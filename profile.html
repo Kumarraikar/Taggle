@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>TAGGLE — Account</title>
+<script type="module">
+  import { loadProfiles, updateProfile } from "./auth.js";
+  loadProfiles();
+</script>
+
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+.fade-up {
+  opacity: 0;
+  transform: translateY(16px);
+  animation: fadeUp .7s ease forwards;
+}
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* RADIO */
+.radio-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  color: rgba(255,255,255,.85);
+}
+.radio-label input { display: none; }
+
+.radio-circle {
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  border: 2px solid rgba(255,255,255,.4);
+  display: grid;
+  place-items: center;
+  transition: .25s;
+}
+.radio-circle::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #facc15;
+  transform: scale(0);
+  transition: .25s;
+}
+.radio-label input:checked + .radio-circle {
+  border-color: #facc15;
+}
+.radio-label input:checked + .radio-circle::after {
+  transform: scale(1);
+}
+
+/* LOCKED STATE */
+.locked input {
+  pointer-events: none;
+  opacity: .6;
+}
+.locked .radio-label {
+  pointer-events: none;
+  opacity: .6;
+}
+/* TOAST */
+.toast {
+  min-width: 280px;
+  max-width: 360px;
+  padding: 14px 18px;
+  border-radius: 14px;
+  backdrop-filter: blur(14px);
+  background: linear-gradient(
+    135deg,
+    rgba(255,255,255,0.15),
+    rgba(255,255,255,0.05)
+  );
+  border: 1px solid rgba(255,255,255,0.18);
+  color: white;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  animation: toastIn .45s ease forwards;
+}
+.toast.success { border-left: 4px solid #facc15; }
+.toast.error   { border-left: 4px solid #ef4444; }
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(-10px) scale(.95); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.toast-exit {
+  animation: toastOut .35s ease forwards;
+}
+@keyframes toastOut {
+  to { opacity: 0; transform: translateY(-10px) scale(.9); }
+}
+/* Make calendar icon white */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  cursor: pointer;
+}
+
+</style>
+</head>
+<script>
+(async () => {
+  const { data } = await supabase.auth.getSession();
+  if (!data.session) {
+    window.location.href = "login.html";
+  }
+})();
+</script>
+
+
+<body class="min-h-screen bg-gradient-to-b from-black via-[#0d1b2a] to-[#1b263b] text-white">
+<div id="toastContainer"
+  class="fixed top-6 right-6 z-50 space-y-3 pointer-events-none"></div>
+
+<!-- NAVBAR -->
+<header class="w-full bg-[#0a192f]/80 backdrop-blur">
+    <nav class="w-full">
+      <div class="mx-auto w-full px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between py-5">
+          <!-- Logo goes back to home -->
+          <a href="combine.html" class="flex items-center gap-2">
+            <span class="text-2xl font-bold text-white">TAGGLE</span>
+          </a>
+
+          <!-- Desktop nav -->
+          <ul class="hidden md:flex items-center gap-7 text-sm">
+            <li>
+              <a class="text-white/80 hover:text-white transition" href="combine.html">
+                Home
+              </a>
+            </li>
+            <li><a class="text-white/80 hover:text-white transition" href="hotels.html">Hotels</a></li>
+            <li><a class="text-white/80 hover:text-white transition" href="flights.html">Flights</a></li>
+            <li><a class="text-white/80 hover:text-white transition" href="cabs.html">Cabs</a></li>
+          </ul>
+
+          <!-- Right side: About, Contact, Login -->
+          <div class="hidden md:flex items-center gap-6 text-sm">
+            <a class="text-white/80 hover:text-white transition" href="about.html">About Us</a>
+            <a class="text-white/80 hover:text-white transition" href="contact.html">Contact Us</a>
+            <a href="profile.html"
+   class="p-2 rounded-full bg-white/10 hover:bg-white/20 transition"
+   aria-label="Profile">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+       viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"
+      d="M5.121 17.804A12 12 0 0112 15c2.577 0 4.956.81 6.879 2.196M15 10a3 3 0 11-6 0 3 3 0 016 0z"/>
+  </svg>
+</a>
+          </div>
+
+          <!-- Mobile toggle -->
+          <button id="navToggle" class="md:hidden p-2 rounded-md bg-white/10 hover:bg-white/20" aria-label="Open menu">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Mobile menu -->
+        <div id="mobileMenu" class="md:hidden hidden border-t border-white/10 pt-4 pb-6">
+          <div class="grid gap-4 text-sm">
+            <a class="text-white/90" href="combine.html">Home</a>
+            <a class="text-white/80" href="hotels.html">Hotels</a>
+            <a class="text-white/80" href="flights.html">Flights</a>
+            <a class="text-white/80" href="cabs.html">Cabs</a>
+            <a class="text-white/80" href="about.html">About Us</a>
+            <a class="text-white/80" href="contact.html">Contact Us</a>
+            <a class="text-yellow-300" href="login.html">Login</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+<!-- MAIN -->
+<main class="max-w-7xl mx-auto px-6 py-14 grid md:grid-cols-[280px_1fr] gap-10">
+
+  <!-- SIDEBAR -->
+  <aside class="bg-white/5 border border-white/10 rounded-2xl p-6 fade-up">
+    <div class="flex gap-4 items-center">
+      <div
+  id="userInitial"
+  class="h-12 w-12 bg-yellow-400 text-black rounded-full flex items-center justify-center font-bold text-lg uppercase">
+</div>
+
+      <div>
+       <p class="font-semibold">
+  Hi <span id="userName"></span>!
+</p>
+
+
+        <p class="text-sm text-white/60"></p>
+      </div>
+    </div>
+
+    <ul class="mt-8 space-y-4 text-sm">
+      <li class="text-yellow-400 font-semibold">Account</li>
+    </ul>
+
+    <button id="logoutBtn"
+  class="mt-8 w-full py-2 rounded-lg bg-white/10 hover:bg-white/20 transition text-sm">
+  Log out
+</button>
+
+  </aside>
+
+  <!-- CONTENT -->
+  <section id="profileForm" class="space-y-8 fade-up">
+
+    <div>
+      <h2 class="text-4xl font-serif">Account</h2>
+      <p class="text-white/60 mt-1">Manage your personal information and preferences</p>
+    </div>
+
+    <!-- BASIC -->
+    <div class="bg-white/5 border border-white/10 rounded-2xl p-6">
+      <h3 class="font-semibold mb-2">Basic details</h3>
+      <p class="text-sm text-white/60 mb-4">Name should be as per govt ID</p>
+
+      <div class="flex gap-6 mb-6">
+        <label class="radio-label">
+  <input type="radio" name="gender" value="male">
+  <span class="radio-circle"></span> Male
+</label>
+
+<label class="radio-label">
+  <input type="radio" name="gender" value="female">
+  <span class="radio-circle"></span> Female
+</label>
+
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-4">
+        <input id="firstName" class="field" placeholder="First Name" />
+        <input id="lastName" class="field" placeholder="Last Name" />
+        <input id="dobField" type="date" class="field md:col-span-2" />
+
+      </div>
+    </div>
+
+    <!-- CONTACT -->
+    <!-- CONTACT -->
+<div class="bg-white/5 border border-white/10 rounded-2xl p-6">
+  <h3 class="font-semibold mb-4">Contact details</h3>
+
+  <div class="grid md:grid-cols-2 gap-4">
+    <!-- Phone -->
+    <input id="phoneField" class="field" placeholder="Mob No." />
+
+    <!-- Email (FULL WIDTH) -->
+    <input id="emailField" class="field md:col-span-2" placeholder="Enter your Email" />
+  </div>
+</div>
+
+    <!-- SAVE -->
+    <button id="saveBtn"
+      class="px-6 py-3 rounded-lg bg-yellow-400 text-black font-semibold hover:opacity-90 transition">
+      Save changes
+    </button>
+
+  </section>
+</main>
+
+<footer class="border-t border-white/10 py-6 text-center text-sm text-white/50">
+  © 2025 TAGGLE — All rights reserved.
+</footer>
+
+<script>
+const saveBtn = document.getElementById("saveBtn");
+const form = document.getElementById("profileForm");
+const fields = document.querySelectorAll(".field");
+
+fields.forEach(f => {
+  f.className += " bg-white/10 border border-white/10 rounded-lg px-4 py-3 outline-none focus:border-yellow-400";
+});
+
+saveBtn.onclick = () => {
+  fields.forEach(f => f.setAttribute("readonly", true));
+  form.classList.add("locked");
+  saveBtn.textContent = "Saved ✓";
+  saveBtn.classList.remove("bg-yellow-400");
+  saveBtn.classList.add("bg-white/20", "cursor-not-allowed");
+  saveBtn.disabled = true;
+};
+</script>
+
+<script type="module">
+  import { updateProfile } from "./auth.js";
+
+  const saveBtn = document.getElementById("saveBtn");
+
+  saveBtn.onclick = async () => {
+    const profile = {
+      first_name: document.getElementById("firstName").value.trim(),
+      last_name: document.getElementById("lastName").value.trim(),
+      gender: document.querySelector('input[name="gender"]:checked')?.value || null,
+      dob: document.getElementById("dobField").value || null,
+      phone: document.getElementById("phoneField").value.trim(),
+      email: document.getElementById("emailField").value.trim(),
+      full_name:
+        document.getElementById("firstName").value.trim() +
+        " " +
+        document.getElementById("lastName").value.trim()
+    };
+
+    try {
+  await updateProfile(profile);
+
+  saveBtn.textContent = "Saved ✓";
+  saveBtn.disabled = true;
+  saveBtn.classList.add("bg-white/20", "cursor-not-allowed");
+
+  showToast("Profile updated successfully");
+} catch (e) {
+  console.error(e);
+  showToast("Failed to save profile", "error");
+}
+
+  };
+</script>
+
+<script type="module">
+  import { logout } from "./auth.js";
+
+  const logoutBtn = document.getElementById("logoutBtn");
+
+  logoutBtn.addEventListener("click", async () => {
+    await logout();
+  });
+</script>
+
+<script type="module">
+  import { supabase } from "./auth.js";
+
+  document.addEventListener("DOMContentLoaded", async () => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+
+    // ✅ Get name from Google
+    const fullName =
+      user.user_metadata?.full_name ||
+      user.user_metadata?.name ||
+      user.email.split("@")[0];
+
+    const nameParts = fullName.split(" ");
+    const firstName = nameParts[0] || "";
+    const lastName = nameParts.slice(1).join(" ") || "";
+
+    // ✅ Fill sidebar
+    document.getElementById("userName").textContent = firstName;
+    document.getElementById("userInitial").textContent =
+      firstName.charAt(0).toUpperCase();
+
+    // ✅ AUTO FILL FORM FIELDS
+    document.getElementById("firstName").value = firstName;
+    document.getElementById("lastName").value = lastName;
+    document.getElementById("emailField").value = user.email;
+
+    // ⚠️ Gender (only if stored previously in DB)
+    if (user.user_metadata?.gender) {
+      const genderRadio = document.querySelector(
+        `input[name="gender"][value="${user.user_metadata.gender}"]`
+      );
+      if (genderRadio) genderRadio.checked = true;
+    }
+  });
+</script>
+<script>
+function showToast(message, type = "success") {
+  const container = document.getElementById("toastContainer");
+
+  const toast = document.createElement("div");
+  toast.className = `toast ${type}`;
+
+  toast.innerHTML = `
+    <div class="mt-1">${type === "success" ? "✅" : "⚠️"}</div>
+    <div>
+      <p class="font-semibold">${type === "success" ? "Success" : "Error"}</p>
+      <p class="text-sm text-white/80">${message}</p>
+    </div>
+  `;
+
+  container.appendChild(toast);
+
+  setTimeout(() => {
+    toast.classList.add("toast-exit");
+    setTimeout(() => toast.remove(), 350);
+  }, 3000);
+}
+</script>
+
+</body>
+</html>

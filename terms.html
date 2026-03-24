@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TAGGLE — Terms & Conditions</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    /* Fade-in animation */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(10px);
+      animation: fadeIn 0.8s ease forwards;
+    }
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-gradient-to-b from-black via-[#071422] to-[#0b192e] text-white antialiased">
+    <header class="w-full bg-[#0a192f]/80 backdrop-blur">
+    <nav class="w-full">
+      <div class="mx-auto w-full px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between py-5">
+          <!-- Logo goes back to home -->
+          <a href="combine.html" class="flex items-center gap-2">
+            <span class="text-2xl font-bold text-white">TAGGLE</span>
+          </a>
+
+          <!-- Desktop nav -->
+          <ul class="hidden md:flex items-center gap-7 text-sm">
+            <li>
+              <a class="text-white/80 hover:text-white transition" href="combine.html">
+                Home
+              </a>
+            </li>
+            <li><a class="text-white/80 hover:text-white transition" href="hotels.html">Hotels</a></li>
+            <li><a class="text-white/80 hover:text-white transition" href="flights.html">Flights</a></li>
+            <li><a class="text-white/80 hover:text-white transition" href="cabs.html">Cabs</a></li>
+          </ul>
+
+          <!-- Right side: About, Contact, Login -->
+          <div class="hidden md:flex items-center gap-6 text-sm">
+            <a class="text-white/80 hover:text-white transition" href="about.html">About Us</a>
+            <a class="text-white/80 hover:text-white transition" href="contact.html">Contact Us</a>
+            <a href="profile.html"
+   class="p-2 rounded-full bg-white/10 hover:bg-white/20 transition"
+   aria-label="Profile">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+       viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"
+      d="M5.121 17.804A12 12 0 0112 15c2.577 0 4.956.81 6.879 2.196M15 10a3 3 0 11-6 0 3 3 0 016 0z"/>
+  </svg>
+</a>
+          </div>
+
+          <!-- Mobile toggle -->
+          <button id="navToggle" class="md:hidden p-2 rounded-md bg-white/10 hover:bg-white/20" aria-label="Open menu">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Mobile menu -->
+        <div id="mobileMenu" class="md:hidden hidden border-t border-white/10 pt-4 pb-6">
+          <div class="grid gap-4 text-sm">
+            <a class="text-white/90" href="combine.html">Home</a>
+            <a class="text-white/80" href="hotels.html">Hotels</a>
+            <a class="text-white/80" href="flights.html">Flights</a>
+            <a class="text-white/80" href="cabs.html">Cabs</a>
+            <a class="text-white/80" href="about.html">About Us</a>
+            <a class="text-white/80" href="contact.html">Contact Us</a>
+            <a class="text-yellow-300" href="login.html">Login</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- PAGE TITLE -->
+  <header class="text-center py-16 fade-in">
+    <h1 style="font-family: 'Baskerville', serif;" class="font-display text-4xl sm:text-5xl lg:text-6xl leading-tight text-white tracking-normal fade-in mt-0">Terms & Conditions</h1>
+    <p class="mt-4 text-white/70 text-lg max-w-2xl mx-auto">
+      Please read these terms carefully. By using TAGGLE’s website or services, you agree to be bound by the following conditions.
+    </p>
+  </header>
+
+  <!-- CONTENT CONTAINER -->
+  <main class="max-w-5xl mx-auto px-6 py-10">
+    <div class="bg-white/5 border border-white/10 rounded-3xl p-10 fade-in space-y-10">
+
+      <!-- Section 1 -->
+      <section>
+        <h2 class="text-2xl font-semibold text-300 mb-3">1. Acceptance of Terms</h2>
+        <p class="text-white/80 leading-relaxed">
+          By accessing or using TAGGLE’s website or services, you acknowledge and agree to comply with these Terms & Conditions.
+        </p>
+      </section>
+
+      <!-- Section 2 -->
+      <section>
+        <h2 class="text-2xl font-semibold text-300 mb-3">2. Use of Website Content</h2>
+        <p class="text-white/80 leading-relaxed">
+          You may view and access the content for personal use only. Copying, modifying, redistributing, or publishing any material without written permission is prohibited.
+        </p>
+      </section>
+
+      <!-- Section 3 -->
+      <section>
+        <h2 class="text-2xl font-semibold text-300 mb-3">3. User Responsibilities</h2>
+        <ul class="list-disc ml-6 text-white/80 leading-relaxed space-y-2">
+          <li>You agree not to misuse the platform or engage in fraudulent activities.</li>
+          <li>You must ensure all information provided by you is accurate.</li>
+          <li>You are responsible for maintaining the confidentiality of your login credentials.</li>
+        </ul>
+      </section>
+
+      <!-- Section 4 -->
+      <section>
+        <h2 class="text-2xl font-semibold text-300 mb-3">4. Prohibited Activities</h2>
+        <ul class="list-disc ml-6 text-white/80 leading-relaxed space-y-2">
+          <li>Reselling services available on the website.</li>
+          <li>Interfering with website functionality or security.</li>
+          <li>Submitting false, misleading, or fraudulent information.</li>
+          <li>Uploading harmful content such as viruses or malicious files.</li>
+        </ul>
+      </section>
+
+      <!-- Section 5 -->
+      <section>
+        <h2 class="text-2xl font-semibold text-300 mb-3">5. External Links</h2>
+        <p class="text-white/80 leading-relaxed">
+          TAGGLE may provide links to external websites for reference. We are not responsible for the content, policies, or actions of these third-party sites.
+        </p>
+      </section>
+
+      <!-- Section 6 -->
+      <section>
+        <h2 class="text-2xl font-semibold text-300 mb-3">6. Limitation of Liability</h2>
+        <p class="text-white/80 leading-relaxed">
+          TAGGLE is not liable for any damages arising from the use or inability to use the website, including service interruptions, inaccuracies, or security breaches.
+        </p>
+      </section>
+
+      <!-- Section 7 -->
+      <section>
+        <h2 class="text-2xl font-semibold text-300 mb-3">7. Changes to Terms</h2>
+        <p class="text-white/80 leading-relaxed">
+          We may update these terms from time to time. Continued use of the website after changes indicates acceptance of the updated terms.
+        </p>
+      </section>
+
+      <!-- Section 8 -->
+      <section>
+        <h2 class="text-2xl font-semibold text-300 mb-3">8. Governing Law</h2>
+        <p class="text-white/80 leading-relaxed">
+          These Terms & Conditions are governed by the laws of India. Any disputes shall fall under the jurisdiction of courts located in New Delhi.
+        </p>
+      </section>
+
+      <!-- Section 9 -->
+      <section>
+        <h2 class="text-2xl font-semibold text-300 mb-3">9. Contact Information</h2>
+        <p class="text-white/80 leading-relaxed">
+          For questions regarding these Terms, you may contact us at:  
+          <br />
+          <span class="text-green-300 font-semibold">support@taggle.com</span>
+        </p>
+      </section>
+
+    </div>
+  </main>
+
+  <br /><br />
+  <footer class="bg-gradient-to-t from-[#071023] via-[#071826] to-transparent text-white mt-12 w-full">
+    <div class="mx-auto max-w-7xl px-6 py-12 lg:py-16">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <!-- Brand + short pitch -->
+        <div class="space-y-4">
+          <a href="combine.html" class="inline-flex items-center gap-3">
+            <div class="h-10 w-10 rounded-full bg-brand-600 flex items-center justify-center shadow-md">
+              <span class="font-bold">T</span>
+            </div>
+            <div>
+              <div class="text-xl font-extrabold tracking-tight">TAGGLE</div>
+              <div class="text-xs text-white/60">Travel & Compare Prices</div>
+            </div>
+          </a>
+
+          <p class="text-sm text-white/70 max-w-xs">
+            Find the best travel deals across flights, hotels and cabs. Real-time price updates, hand-picked partners, and a simple booking experience.
+          </p>
+
+          <div class="flex items-center gap-3 mt-2">
+            <a aria-label="Facebook" href="https://www.facebook.com/share/1BkpRiowvt/?mibextid=wwXIfr" class="p-2 rounded-full bg-white/5 hover:bg-white/10 transition">
+              <!-- Facebook svg -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 10-11.5 9.87v-6.99h-2.3v-2.88h2.3V9.41c0-2.28 1.35-3.54 3.43-3.54 .99 0 2.03.18 2.03.18v2.24h-1.14c-1.12 0-1.47.7-1.47 1.41v1.69h2.5l-.4 2.88h-2.1v6.99A10 10 0 0022 12z"/></svg>
+            </a>
+            <a aria-label="Instagram" href="https://www.instagram.com/taggle.in" class="p-2 rounded-full bg-white/5 hover:bg-white/10 transition">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5zm0 2a3 3 0 00-3 3v10a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H7zm5 3.8a5.2 5.2 0 110 10.4A5.2 5.2 0 0112 7.8zm0 2a3.2 3.2 0 100 6.4 3.2 3.2 0 000-6.4zM18 6.3a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z"/></svg>
+            </a>
+            <a aria-label="X (Twitter)" href="https://x.com/Taggle_in" class="p-2 rounded-full bg-white/5 hover:bg-white/10 transition">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M22 5.92c-.65.3-1.35.5-2.08.6a3.63 3.63 0 001.6-1.98 7.35 7.35 0 01-2.32.9 3.66 3.66 0 00-6.24 3.34A10.4 10.4 0 013 4.87a3.66 3.66 0 001.13 4.88 3.6 3.6 0 01-1.66-.46v.05a3.66 3.66 0 002.94 3.58c-.37.1-.76.14-1.16.14-.28 0-.56-.03-.82-.08a3.66 3.66 0 003.41 2.54A7.34 7.34 0 012 19.54a10.36 10.36 0 005.6 1.64c6.73 0 10.41-5.58 10.41-10.41v-.47c.72-.52 1.33-1.16 1.82-1.9z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Explore links -->
+        <div>
+          <h4 class="text-sm font-semibold">Explore</h4>
+          <ul class="mt-4 space-y-2 text-sm text-white/70">  
+            <li><a href="hotels.html" class="hover:text-white">Hotels</a></li>
+            <li><a href="flights.html" class="hover:text-white">Flights</a></li>
+            <li><a href="cabs.html" class="hover:text-white">cabs</a></li>
+
+          </ul>
+        </div>
+
+
+        <!-- Support links -->
+        <div>
+          <h4 class="text-sm font-semibold">Support</h4>
+          <ul class="mt-4 space-y-2 text-sm text-white/70">
+            <li><a href="contact.html" class="hover:text-white">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <!-- Newsletter column removed per user request -->
+      </div>
+
+      <!-- Divider -->
+      <div class="mt-10 border-t border-white/6 pt-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <p class="text-xs text-white/60">© <span id="year"></span> TAGGLE — All rights reserved.</p>
+        <div class="flex items-center gap-4 text-xs text-white/60">
+          <a href="terms.html" class="hover:text-white">Terms</a>
+          <span class="hidden md:inline">•</span>
+          <a href="privacy.html" class="hover:text-white">Privacy</a>
+          <span class="hidden md:inline">•</span>
+          <a href="sitemap.html" class="hover:text-white">Sitemap</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Back to top button -->
+    <button id="backToTop" aria-label="Back to top" class="fixed right-6 bottom-24 hidden h-11 w-11 rounded-full bg-white/6 backdrop-blur hover:bg-white/10 transition-shadow shadow-lg">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 m-auto" viewBox="0 0 24 24" fill="currentColor"><path d="M12 5l-7 7h4v7h6v-7h4z"/></svg>
+    </button>
+
+    <script>
+      // set dynamic year
+      document.getElementById('year').textContent = new Date().getFullYear();
+
+      // back to top behavior
+      const backToTop = document.getElementById('backToTop');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) backToTop.classList.remove('hidden');
+        else backToTop.classList.add('hidden');
+      });
+      backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+      // stagger fade-in animation
+      document.addEventListener('DOMContentLoaded', () => {
+        const items = document.querySelectorAll('.fade-in');
+        items.forEach((el, i) => {
+          el.style.animationDelay = (i * 120) + 'ms';
+        });
+      });
+    </script>
+  </footer>
+
+  <!-- small JS to set year and animate children (stagger already set inline) -->
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // if you want to programmatically stagger elements instead of inline delays:
+    // (not required — left here as optional)
+    // const nodes = document.querySelectorAll('.fade-up');
+    // nodes.forEach((n,i) => n.style.animationDelay = (i*80)+'ms');
+  </script>
+</body>
+</html>

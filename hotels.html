@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TAGGLE — Hotels</title>
+
+  <!-- Tailwind via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50:  '#f0f9f6',
+              100: '#d9f2ea',
+              200: '#b7e6d8',
+              300: '#88d5c2',
+              400: '#5fc2aa',
+              500: '#3aa992',
+              600: '#288a77',
+              700: '#216e61',
+              800: '#1f574f',
+              900: '#1d4742',
+            },
+          },
+          boxShadow: {
+            card: '0 15px 35px rgba(0,0,0,.25)',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'ui-sans-serif', 'Helvetica', 'Arial'],
+            display: ['Fraunces', 'Georgia', 'ui-serif', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Fraunces:opsz,wght@9..144,700;9..144,800;9..144,900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23288977'/%3E%3Ctext x='50' y='62' font-size='54' text-anchor='middle' fill='white' font-family='Arial'%3ET%3C/text%3E%3C/svg%3E">
+
+ <style>
+    /* Hero background image with soft overlay */
+    .hero-bg {
+      background-image:
+        linear-gradient(180deg, rgba(4, 10, 18, 0.75), rgba(4, 10, 18, 0.9)),
+        url('https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg');
+      background-size: cover;
+      background-position: center;
+    }
+
+    /* Fade / slide-in animation */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.8s ease forwards;
+    }
+
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Card hover lift */
+    .card-hover {
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 50px rgba(0,0,0,0.5);
+    }
+    /* Ensure all elements respect container width */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Provider row container */
+.provider-row {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  grid-template-rows: auto auto;
+  gap: 8px 12px;
+  background: rgba(255,255,255,0.05);
+  padding: 16px;
+  border-radius: 16px;
+}
+/* Provider name wrapper */
+.provider-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;              /* 👈 controls spacing */
+  min-width: 0;
+}
+.provider-name {
+  font-weight: 600;
+  white-space: nowrap;
+}
+.cheapest-badge {
+  background: rgba(250, 204, 21, 0.15);
+  color: #facc15;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+/* Price */
+.provider-price {
+  font-weight: 700;
+  white-space: nowrap;
+  justify-self: end;
+}
+/* Button */
+.provider-cta {
+  grid-column: 1 / -1;      /* 👈 spans full row */
+  display: flex;
+  justify-content: center;  /* 👈 centered */
+}
+.view-deal-btn {
+  width: 120px;
+  height: 40px;
+  background: #facc15;
+  color: #000;
+  font-weight: 600;
+  border-radius: 12px;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px rgba(0,0,0,0.2) inset !important;
+  -webkit-text-fill-color: white !important;
+  transition: background-color 9999s ease-in-out 0s;
+}
+
+  </style>
+  <script type="module">
+  import { supabase } from "./auth.js";
+
+  const { data: { user } } = await supabase.auth.getUser();
+
+  if (!user) {
+    window.location.href = "login.html";
+  }
+</script>
+
+</head>
+
+<body class="min-h-screen bg-gradient-to-b from-black via-[#0d1b2a] to-[#1b263b] text-white antialiased overflow-x-hidden">
+
+  <!-- NAVBAR -->
+  <header class="w-full bg-[#0a192f]/80 backdrop-blur">
+    <nav class="w-full">
+      <div class="mx-auto w-full px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between py-5">
+          <!-- Logo goes back to home -->
+          <a href="combine.html" class="flex items-center gap-2">
+            <span class="text-2xl font-bold text-white">TAGGLE</span>
+          </a>
+
+          <!-- Desktop nav -->
+          <ul class="hidden md:flex items-center gap-7 text-sm">
+            <li>
+              <a class="text-white/80 hover:text-white transition" href="combine.html">
+                Home
+              </a>
+            </li>
+            <li><a class="text-white/80 hover:text-white transition" href="hotels.html">Hotels</a><span class="block h-[2px] w-15 bg-yellow-400 rounded mt-1"></span></li>
+            <li><a class="text-white/80 hover:text-white transition" href="flights.html">Flights</a></li>
+            <li><a class="text-white/80 hover:text-white transition" href="cabs.html">Cabs</a></li>
+          </ul>
+
+          <!-- Right side: About, Contact, Login -->
+          <div class="hidden md:flex items-center gap-6 text-sm">
+            <a class="text-white/80 hover:text-white transition" href="about.html">About Us</a>
+            <a class="text-white/80 hover:text-white transition" href="contact.html">Contact Us</a>
+            <a href="profile.html"
+   class="p-2 rounded-full bg-white/10 hover:bg-white/20 transition"
+   aria-label="Profile">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+       viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"
+      d="M5.121 17.804A12 12 0 0112 15c2.577 0 4.956.81 6.879 2.196M15 10a3 3 0 11-6 0 3 3 0 016 0z"/>
+  </svg>
+</a>
+          </div>
+
+          <!-- Mobile toggle -->
+          <button id="navToggle" class="md:hidden p-2 rounded-md bg-white/10 hover:bg-white/20" aria-label="Open menu">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Mobile menu -->
+        <div id="mobileMenu" class="md:hidden hidden border-t border-white/10 pt-4 pb-6">
+          <div class="grid gap-4 text-sm">
+            <a class="text-white/90" href="combine.html">Home</a>
+            <a class="text-white/80" href="hotels.html">Hotels</a>
+            <a class="text-white/80" href="flights.html">Flights</a>
+            <a class="text-white/80" href="cabs.html">Cabs</a>
+            <a class="text-white/80" href="about.html">About Us</a>
+            <a class="text-white/80" href="contact.html">Contact Us</a>
+            <a class="text-yellow-300" href="login.html">Login</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+
+  <!-- HERO -->
+  <main>
+    <section class="hero-bg min-h-[70vh] flex items-center">
+      <div class="mx-auto max-w-6xl w-full px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Heading + text -->
+        <div class="max-w-2xl fade-up">
+          <h1 style="font-family: 'Baskerville', serif;" class="font-display text-4xl sm:text-5xl lg:text-6xl leading-tight text-white tracking-normal">
+            The ease of choosing a<br class="hidden md:block"/> dream hotel
+          </h1>
+          <p class="mt-4 text-white/80 text-sm md:text-base leading-relaxed">
+            Search, compare and book hotels with real-time prices across trusted providers.
+            Simple, fast and reliable so you spend less time planning and more time enjoying.
+          </p>
+        </div>
+
+        <!-- Glass Search Card -->
+        <div class="mt-10 fade-up" style="animation-delay: .15s;">
+          <div
+            class="mx-auto max-w-5xl rounded-[32px] bg-white/10 border border-white/25
+                   shadow-2xl backdrop-blur-xl px-5 py-4 md:px-8 md:py-6">
+            <form class="flex flex-col gap-4 md:flex-row md:items-end">
+              <!-- Country -->
+              <div class="flex-1 min-w-[150px]">
+                <label class="text-xs md:text-sm text-white/80 block mb-1">Country</label>
+               <input id="country"
+  type="text"
+  placeholder="Country"
+  class="w-full rounded-2xl
+         bg-black/10
+         border border-white/30
+         px-4 py-3 text-sm
+         text-white placeholder:text-white/60
+         focus:outline-none
+         focus:ring-2 focus:ring-yellow-400
+         focus:border-yellow-400"
+/>
+
+              </div>
+
+              <!-- City -->
+              <div class="flex-1 min-w-[150px]">
+                <label class="text-xs md:text-sm text-white/80 block mb-1">City</label>
+                <input id="city"
+  type="text"
+  placeholder="City"
+  class="w-full rounded-2xl
+         bg-black/10
+         border border-white/30
+         px-4 py-3 text-sm
+         text-white placeholder:text-white/60
+         focus:outline-none
+         focus:ring-2 focus:ring-yellow-400
+         focus:border-yellow-400"
+/>
+
+              </div>
+
+              <!-- Dates -->
+              <div class="flex-1 min-w-[180px]">
+                <label class="text-xs md:text-sm text-white/80 block mb-1">Dates</label>
+                <input
+                id="checkInDate"
+                  type="date"
+                  placeholder="28 Sep – 03 Oct"
+                  class="w-full rounded-2xl bg-black/10 border border-white/30 px-4 py-3 text-sm
+                         placeholder:text-white/60 focus:outline-none focus:ring-2
+                         focus:ring-yellow-400 focus:border-yellow-400
+                         [color-scheme:dark]
+         [&::-webkit-calendar-picker-indicator]:cursor-pointer" />
+              </div>
+              <div class="md:ml-3">
+                <button id="searchBtn"
+  type="button"
+  class="btn-primary w-full md:w-auto rounded-2xl bg-yellow-400 px-6 py-3 text-sm font-semibold text-black">
+  Search
+</button>
+
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    </section> <!-- hero ends -->
+     <section class="max-w-6xl mx-auto px-6 py-12 space-y-10">
+      <!-- Feature cards -->
+      <div class="grid gap-6 md:grid-cols-3">
+        <!-- Card 1 -->
+        <article class="bg-white/5 border border-white/10 rounded-2xl overflow-hidden card-hover fade-in">
+          <div class="p-4 space-y-2">
+            <h3 class="font-semibold text-lg">Verified stays</h3>
+            <p>
+              Browse hotels with geenuine reviews,ratings and photos so you know exactly what to expert.
+            </p>
+          </div>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="bg-white/5 border border-white/10 rounded-2xl overflow-hidden card-hover fade-in">
+          <div class="p-4 space-y-2">
+            <h3 class="font-semibold text-lg">Instant booking</h3>
+            <p>
+              Lock in your from in just a few taps,with instant confirmation and flexible options.
+            </p>
+          </div>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="bg-white/5 border border-white/10 rounded-2xl overflow-hidden card-hover fade-in">
+          <div class="p-4 space-y-2">
+            <h3 class="font-semibold text-lg">Smart pricing</h3>
+            <p>
+              Taggle compares price across partnersin real time to get you the best deal available.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+<section
+  id="availableHotelsSection"
+  class="max-w-6xl mx-auto px-6 py-12 hidden"
+>
+  <h2 class="text-2xl font-semibold mb-6">Available Hotels</h2>
+ <div id="hotelResults" class="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3"></div>
+</section>
+
+
+
+
+    <!-- Simple “feature” section -->
+  </main>
+
+  <!-- FOOTER -->
+   <footer class="bg-gradient-to-t from-[#071023] via-[#071826] to-transparent text-white mt-12 w-full">
+    <div class="mx-auto max-w-7xl px-6 py-12 lg:py-16">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="space-y-4">
+          <a href="combine.html" class="inline-flex items-center gap-3">
+            <div class="h-10 w-10 rounded-full bg-brand-600 flex items-center justify-center shadow-md"><span class="font-bold">T</span></div>
+            <div><div class="text-xl font-extrabold tracking-tight">TAGGLE</div><div class="text-xs text-white/60">Travel & Compare Prices</div></div>
+          </a>
+
+          <p class="text-sm text-white/70 max-w-xs">
+            Find the best travel deals across flights, hotels and cabs.
+          </p>
+
+          <div class="flex items-center gap-3 mt-2">
+          <a aria-label="Facebook" href="https://www.facebook.com/share/1BkpRiowvt/?mibextid=wwXIfr" class="p-2 rounded-full bg-white/5 hover:bg-white/10 transition">
+            <!-- Facebook svg -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 10-11.5 9.87v-6.99h-2.3v-2.88h2.3V9.41c0-2.28 1.35-3.54 3.43-3.54 .99 0 2.03.18 2.03.18v2.24h-1.14c-1.12 0-1.47.7-1.47 1.41v1.69h2.5l-.4 2.88h-2.1v6.99A10 10 0 0022 12z"/></svg>
+          </a>
+          <a aria-label="Instagram" href="https://www.instagram.com/taggle.in" class="p-2 rounded-full bg-white/5 hover:bg-white/10 transition">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5zm0 2a3 3 0 00-3 3v10a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H7zm5 3.8a5.2 5.2 0 110 10.4A5.2 5.2 0 0112 7.8zm0 2a3.2 3.2 0 100 6.4 3.2 3.2 0 000-6.4zM18 6.3a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z"/></svg>
+          </a>
+          <a aria-label="X (Twitter)" href="https://x.com/Taggle_in" class="p-2 rounded-full bg-white/5 hover:bg-white/10 transition">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M22 5.92c-.65.3-1.35.5-2.08.6a3.63 3.63 0 001.6-1.98 7.35 7.35 0 01-2.32.9 3.66 3.66 0 00-6.24 3.34A10.4 10.4 0 013 4.87a3.66 3.66 0 001.13 4.88 3.6 3.6 0 01-1.66-.46v.05a3.66 3.66 0 002.94 3.58c-.37.1-.76.14-1.16.14-.28 0-.56-.03-.82-.08a3.66 3.66 0 003.41 2.54A7.34 7.34 0 012 19.54a10.36 10.36 0 005.6 1.64c6.73 0 10.41-5.58 10.41-10.41v-.47c.72-.52 1.33-1.16 1.82-1.9z"/></svg>
+          </a>
+        </div>
+        </div>
+
+        <div>
+          <h4 class="text-sm font-semibold">Explore</h4>
+          <ul class="mt-4 space-y-2 text-sm text-white/70">  
+            <li><a href="hotels.html" class="hover:text-white">Hotels</a></li>
+            <li><a href="flights.html" class="hover:text-white">Flights</a></li>
+            <li><a href="cabs.html" class="hover:text-white">cabs</a></li>
+
+          </ul>
+        </div>
+
+
+        <div>
+          <h4 class="text-sm font-semibold">Support</h4>
+          <ul class="mt-4 space-y-2 text-sm text-white/70">
+            <li><a href="contact.html" class="hover:text-white">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <div><!-- empty placeholder if needed --></div>
+      </div>
+
+     <div class="mt-10 border-t border-white/6 pt-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <p class="text-xs text-white/60">© <span id="year"></span> TAGGLE — All rights reserved.</p>
+      <div class="flex items-center gap-4 text-xs text-white/60">
+        <a href="terms.html" class="hover:text-white">Terms</a>
+        <span class="hidden md:inline">•</span>
+        <a href="privacy.html" class="hover:text-white">Privacy</a>
+        <span class="hidden md:inline">•</span>
+        <a href="sitemap.html" class="hover:text-white">Sitemap</a>
+      </div>
+    </div>
+    </div>
+
+  <!-- Scripts -->
+  <button id="backToTop" aria-label="Back to top" class="fixed right-6 bottom-24 hidden h-11 w-11 rounded-full bg-white/6 backdrop-blur hover:bg-white/10 transition-shadow shadow-lg">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 m-auto" viewBox="0 0 24 24" fill="currentColor"><path d="M12 5l-7 7h4v7h6v-7h4z"/></svg>
+  </button>
+
+  <script>
+    // set dynamic year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // newsletter removed (HTML removed)
+
+
+    // back to top behavior
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) backToTop.classList.remove('hidden');
+      else backToTop.classList.add('hidden');
+    });
+    backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+</footer>
+
+  <!-- Mobile menu script -->
+  <script>
+    const toggle = document.getElementById('navToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    if (toggle && mobileMenu) {
+      toggle.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+    }
+  </script>
+  <script>
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRvcmpmbXNhaHJmb2F1bGJreHlwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjczNTg3MDAsImV4cCI6MjA4MjkzNDcwMH0.3atOHO4RbFm1D4At_6Ks8ZmJKhpP8DwP-EPPPfWU_ao";
+
+document.getElementById("searchBtn").addEventListener("click", searchHotels);
+document.getElementById("checkInDate").min =
+  new Date().toISOString().split("T")[0];
+
+function showToast(message, type = "error") {
+  const toastBox = document.getElementById("toastBox");
+
+  toastBox.textContent = message;
+
+  // Reset classes
+  toastBox.classList.remove(
+    "bg-white/10",
+    "border-white/20",
+    "border-red-400",
+    "border-green-400",
+    "bg-red-500/20",
+    "bg-green-500/20"
+  );
+
+  if (type === "success") {
+    toastBox.classList.add(
+      "bg-green-500/20",
+      "border",
+      "border-green-400"
+    );
+  } else {
+    // 🔴 This gives the maroon glass look
+    toastBox.classList.add(
+      "bg-red-500/20",
+      "border",
+      "border-red-400"
+    );
+  }
+
+  // Show animation
+  toastBox.classList.remove("opacity-0", "scale-90");
+  toastBox.classList.add("opacity-100", "scale-100");
+
+  // Auto hide
+  setTimeout(() => {
+    toastBox.classList.add("opacity-0", "scale-90");
+    toastBox.classList.remove("opacity-100", "scale-100");
+  }, 2500);
+}
+
+async function searchHotels() {
+  const city = document.getElementById("city").value.trim();
+  const country = document
+    .getElementById("country")
+    .value
+    .trim()
+    .slice(0, 2)
+    .toUpperCase();
+
+  const dateInput = document.getElementById("checkInDate").value;
+
+  const resultsDiv = document.getElementById("hotelResults");
+
+  // 🔴 City & Country validation
+  if (!city || !country) {
+    showToast("Please enter city and country 🌍");
+    return;
+  }
+
+  // 🔴 Date required validation
+  if (!dateInput) {
+    showToast("Please select a date 📅");
+    return;
+  }
+
+  // 🔴 Past date validation
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const selectedDate = new Date(dateInput);
+
+  if (selectedDate < today) {
+    showToast("date cannot be in the past");
+    return;
+  }
+
+  const date = dateInput;
+  document
+  .getElementById("availableHotelsSection")
+  .classList.remove("hidden");
+
+resultsDiv.innerHTML = "<p class='text-white/70'>Searching hotels...</p>";
+  try{
+
+const res = await fetch(
+  `https://dorjfmsahrfoaulbkxyp.supabase.co/functions/v1/get-hotels?city=${encodeURIComponent(city)}&country=${encodeURIComponent(country)}&checkInDate=${date}`,
+  {
+    headers: {
+      Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+      apikey: SUPABASE_ANON_KEY,
+    },
+  }
+);
+
+
+    if (!res.ok) {
+  resultsDiv.innerHTML = "<p>Server error</p>";
+  return;
+}
+
+const data = await res.json();
+console.log("HOTEL DATA:", data);
+if (!Array.isArray(data.hotels) || data.hotels.length === 0) {
+  showToast("Location not found. Please enter a valid city or area.");
+  resultsDiv.innerHTML = "";
+  return;
+}
+
+    resultsDiv.innerHTML = "";
+
+    if (!data.hotels || data.hotels.length === 0) {
+  showToast("Location not found. Please enter a valid city or area.");
+  resultsDiv.innerHTML = "";
+  document
+  .getElementById("availableHotelsSection")
+  .classList.remove("hidden");
+  return;
+}
+
+
+   data.hotels.forEach(hotel => {
+
+  const providers = hotel.providers || [];
+
+  const minPrice = Math.min(
+    ...providers.map(p => p.price)
+  );
+// Smooth scroll to results
+document
+  .getElementById("availableHotelsSection")
+  .scrollIntoView({ behavior: "smooth" });
+
+  resultsDiv.innerHTML += `
+    <div class="bg-white/5 border border-white/10 rounded-2xl p-5 card-hover">
+
+      <div class="flex items-center gap-3 mb-3">
+  <div class="w-10 h-10 flex items-center justify-center bg-white/10 rounded-lg">
+    <svg xmlns="http://www.w3.org/2000/svg" 
+         class="w-5 h-5 text-yellow-400" 
+         fill="none" 
+         viewBox="0 0 24 24" 
+         stroke="currentColor">
+      <path stroke-linecap="round" 
+            stroke-linejoin="round" 
+            stroke-width="2" 
+            d="M3 21h18M4 10h16M5 6h14M6 2h12v4H6z"/>
+    </svg>
+  </div>
+
+  <h3 class="text-lg font-semibold">
+    ${hotel.name}
+  </h3>
+</div>
+
+
+      <p class="text-sm text-white/60 mb-4">
+        ${hotel.city}, ${hotel.country}
+      </p>
+
+      ${providers.map(provider => `
+  <div class="bg-white/5 p-4 rounded-xl mb-3">
+
+    <div class="flex justify-between items-center mb-3">
+
+      <div class="flex items-center gap-3">
+        <span class="font-medium">${provider.name}</span>
+
+        ${provider.price === minPrice ? `
+          <span class="text-green-400 text-sm font-semibold">
+            Cheapest
+          </span>
+        ` : ""}
+      </div>
+
+      <div class="font-bold text-yellow-400">
+        ₹ ${provider.price}
+      </div>
+
+    </div>
+
+    <button 
+      onclick="openHotelDeal('${provider.url}')"
+      class="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-2 rounded-lg transition"
+    >
+      Select Hotel
+    </button>
+
+  </div>
+`).join("")}
+
+    </div>
+  `;
+});
+
+  } catch (err) {
+    console.error(err);
+    resultsDiv.innerHTML = "<p>Error fetching hotels.</p>";
+  }
+}
+
+
+</script>
+<script>
+function openHotelDeal(url) {
+  if (!url) {
+    showToast("Booking link not available.");
+    return;
+  }
+  window.open(url, "_blank", "noopener,noreferrer");
+}
+</script>
+<script>
+function getHotelLogo(hotelName) {
+  const clean = hotelName
+    .toLowerCase()
+    .replace(/hotel|resort|inn|the|&/g, "")
+    .trim()
+    .split(" ")[0];
+
+  return `https://www.google.com/s2/favicons?sz=64&domain=${clean}.com`;
+}
+</script>
+<!-- Glass Toast Below Navbar -->
+<div id="toastContainer"
+  class="fixed top-16 left-1/2 -translate-x-1/2 z-50 pointer-events-none">
+
+  <div id="toastBox"
+  class="px-8 py-4 rounded-2xl 
+         backdrop-blur-xl
+         text-white text-sm font-medium shadow-2xl
+         transform scale-90 opacity-0
+         transition-all duration-300 ease-out">
+  Message
+</div>
+
+
+</div>
+</body>
+</html>

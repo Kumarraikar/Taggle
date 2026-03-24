@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TAGGLE — Flights</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50:  '#f0f9f6',
+              100: '#d9f2ea',
+              200: '#b7e6d8',
+              300: '#88d5c2',
+              400: '#5fc2aa',
+              500: '#3aa992',
+              600: '#288a77',
+              700: '#216e61',
+              800: '#1f574f',
+              900: '#1d4742',
+            },
+          },
+          boxShadow: {
+            card: '0 15px 35px rgba(0,0,0,.25)',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'ui-sans-serif', 'Helvetica', 'Arial'],
+            display: ['Fraunces', 'Georgia', 'ui-serif', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Hero background image with soft overlay */
+    .hero-bg {
+      background-image:
+        linear-gradient(180deg, rgba(4, 10, 18, 0.75), rgba(4, 10, 18, 0.9)),
+        url("https://images.pexels.com/photos/59519/pexels-photo-59519.jpeg");
+      background-size: cover;
+      background-position: center;
+    }
+
+    /* Fade / slide-in animation */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(8px);
+      animation: fadeUp 0.7s ease forwards;
+    }
+
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Card hover lift */
+    .card-hover {
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 50px rgba(0,0,0,0.5);
+    }
+    input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: white !important;
+  box-shadow: 0 0 0px 1000px rgba(0, 0, 0, 0.35) inset !important;
+  border: 1px solid rgba(255,255,255,0.2) !important;
+  transition: background-color 9999s ease-in-out 0s;
+}
+  </style>
+  <script type="module">
+  import { supabase } from "./auth.js";
+
+  const { data: { user } } = await supabase.auth.getUser();
+
+  if (!user) {
+    window.location.href = "login.html";
+  }
+</script>
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Fraunces:opsz,wght@9..144,700;9..144,800;9..144,900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="min-h-screen bg-gradient-to-b from-black via-[#0d1b2a] to-[#1b263b] text-white antialiased overflow-x-hidden">
+
+  <!-- NAVBAR (same TAGGLE look on every page) -->
+ <header class="w-full bg-[#0a192f]/80 backdrop-blur">
+    <nav class="w-full">
+      <div class="mx-auto w-full px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between py-5">
+          <!-- Logo goes back to home -->
+          <a href="combine.html" class="flex items-center gap-2">
+            <span class="text-2xl font-bold text-white">TAGGLE</span>
+          </a>
+
+          <!-- Desktop nav -->
+          <ul class="hidden md:flex items-center gap-7 text-sm">
+            <li>
+              <a class="text-white/80 hover:text-white transition" href="combine.html">
+                Home
+              </a>
+            </li>
+            <li><a class="text-white/80 hover:text-white transition" href="hotels.html">Hotels</a></li>
+            <li><a class="text-white/80 hover:text-white transition" href="flights.html">Flights</a><span class="block h-[2px] w-15 bg-yellow-400 rounded mt-1"></span></li>
+            <li><a class="text-white/80 hover:text-white transition" href="cabs.html">Cabs</a></li>
+          </ul>
+
+          <!-- Right side: About, Contact, Login -->
+          <div class="hidden md:flex items-center gap-6 text-sm">
+            <a class="text-white/80 hover:text-white transition" href="about.html">About Us</a>
+            <a class="text-white/80 hover:text-white transition" href="contact.html">Contact Us</a>
+            <a href="profile.html"
+   class="p-2 rounded-full bg-white/10 hover:bg-white/20 transition"
+   aria-label="Profile">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+       viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"
+      d="M5.121 17.804A12 12 0 0112 15c2.577 0 4.956.81 6.879 2.196M15 10a3 3 0 11-6 0 3 3 0 016 0z"/>
+  </svg>
+</a>
+          </div>
+
+          <!-- Mobile toggle -->
+          <button id="navToggle" class="md:hidden p-2 rounded-md bg-white/10 hover:bg-white/20" aria-label="Open menu">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Mobile menu -->
+        <div id="mobileMenu" class="md:hidden hidden border-t border-white/10 pt-4 pb-6">
+          <div class="grid gap-4 text-sm">
+            <a class="text-white/90" href="combine.html">Home</a>
+            <a class="text-white/80" href="hotels.html">Hotels</a>
+            <a class="text-white/80" href="flights.html">Flights</a>
+            <a class="text-white/80" href="cabs.html">Cabs</a>
+            <a class="text-white/80" href="about.html">About Us</a>
+            <a class="text-white/80" href="contact.html">Contact Us</a>
+            <a class="text-yellow-300" href="login.html">Login</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+
+  <!-- MAIN CONTENT -->
+  <main>
+    <!-- HERO SECTION -->
+    <section class="hero-bg min-h-[60vh] flex items-center">
+      <div class="mx-auto max-w-6xl w-full px-6 py-16">
+        <div class="grid md:grid-cols-2 gap-10 items-center">
+          <!-- Left: heading + text -->
+          <div class="space-y-5 fade-up" style="animation-delay: 80ms;">
+            <h1 style="font-family: 'Baskerville', serif;" class="font-display text-4xl sm:text-5xl lg:text-6xl leading-tight text-white tracking-normal">
+              Compare. Book. <br class="hidden sm:inline" />
+              Take off at the best price.
+            </h1>
+            <p class="text-white/80 max-w-xl text-sm md:text-base">
+              Search flights from hundreds of airlines, compare live prices,
+              and book the trip that fits your budget and schedule — all in one place.
+            </p>
+          </div>
+
+          <!-- Right: search card -->
+          <div class="relative fade-up" style="animation-delay: 180ms;">
+            <div class="bg-white/10 border border-white/20 rounded-3xl shadow-card backdrop-blur-md p-5 md:p-6">
+              <!-- Form -->
+              <form class="space-y-3">
+                <div class="grid md:grid-cols-2 gap-3">
+                  <!-- From -->
+                  <div>
+                    <label class="block text-xs text-white/70 mb-1">From</label>
+                    <input
+                    id="from"
+                      type="text"
+                      placeholder="Start from..."
+                      class="w-full rounded-xl bg-black/10 border border-white/25 px-3 py-2.5 text-sm placeholder:text-white/50 focus:outline-none focus:ring-1 focus:ring-yellow-400 focus:border-yellow-400">
+                  </div>
+                  <!-- To -->
+                  <div>
+                    <label class="block text-xs text-white/70 mb-1">To</label>
+                    <input
+                    id="to"
+                      type="text"
+                      placeholder="Going to?"
+                      class="w-full rounded-xl bg-black/10 border border-white/25 px-3 py-2.5 text-sm placeholder:text-white/50 focus:outline-none focus:ring-1 focus:ring-yellow-400 focus:border-yellow-400">
+                  </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-4">
+                  <!-- Departure -->
+                  <div>
+                    <label class="block text-xs text-white/70 mb-1">Departure</label>
+                    <div class="flex items-center gap-2 rounded-xl bg-black/10 border border-white/25 px-3 py-2.5 text-sm">
+                      <input
+                      id="departure"
+                        type="date"
+                        placeholder="DD/MM/YYYY"
+                        class="bg-transparent w-full text-sm outline-none placeholder:text-white/50
+                        [color-scheme:dark]
+         [&::-webkit-calendar-picker-indicator]:cursor-pointer">
+                    </div>
+                  </div>
+
+                  <!-- Return -->
+                  <div>
+                    <label class="block text-xs text-white/70 mb-1">Return</label>
+                    <div class="flex items-center gap-2 rounded-xl bg-black/10 border border-white/25 px-3 py-2.5 text-sm">
+                      <input
+                      id="returnDate"
+                        type="date"
+                        placeholder="DD/MM/YYYY"
+                        class="bg-transparent w-full text-sm outline-none placeholder:text-white/50
+                        [color-scheme:dark]
+         [&::-webkit-calendar-picker-indicator]:cursor-pointer ">
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="md:flex-none">
+    <button
+  onclick="searchFlights()"
+  class="btn-primary w-full md:w-auto rounded-2xl bg-yellow-400 px-5 py-2 font-semibold text-black text-base mt-2 md:mt-6">
+  Search
+</button>
+
+  </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURE CARDS -->
+    <section class="max-w-6xl mx-auto px-6 py-12 space-y-10">
+      <!-- Feature cards -->
+      <div class="grid gap-6 md:grid-cols-3">
+        <!-- Card 1 -->
+        <article class="bg-white/5 border border-white/10 rounded-2xl overflow-hidden card-hover fade-in">
+          <div class="p-4 space-y-2">
+            <h3 class="font-semibold text-lg">Smart comparisons</h3>
+            <p>
+              View prices from multiple airlines side-by-side so you always know you're getting a fair deal.
+            </p>
+          </div>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="bg-white/5 border border-white/10 rounded-2xl overflow-hidden card-hover fade-in">
+          <div class="p-4 space-y-2">
+            <h3 class="font-semibold text-lg">Flexible dates</h3>
+            <p>
+              Explore nearby dates to find cheaper options when your schedule is flexible.
+            </p>
+          </div>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="bg-white/5 border border-white/10 rounded-2xl overflow-hidden card-hover fade-in">
+          <div class="p-4 space-y-2">
+            <h3 class="font-semibold text-lg">Real-time updates</h3>
+            <p>
+              Prices update in real-time, so you can book at the right moment and avoid last-minute surprises.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+<section
+  id="availableFlightsSection"
+  class="max-w-6xl mx-auto px-6 py-12 hidden"
+>
+  <h2 class="text-2xl font-semibold mb-6">Available Flights</h2>
+  <div id="flightResults" class="grid gap-6 md:grid-cols-2 lg:grid-cols-3"></div>
+</section>
+
+
+  <!-- FOOTER (short & simple) -->
+  <footer class="bg-gradient-to-t from-[#071023] via-[#071826] to-transparent text-white mt-12 w-full">
+    <div class="mx-auto max-w-7xl px-6 py-12 lg:py-16">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="space-y-4">
+          <a href="combine.html" class="inline-flex items-center gap-3">
+            <div class="h-10 w-10 rounded-full bg-brand-600 flex items-center justify-center shadow-md"><span class="font-bold">T</span></div>
+            <div><div class="text-xl font-extrabold tracking-tight">TAGGLE</div><div class="text-xs text-white/60">Travel & Compare Prices</div></div>
+          </a>
+
+          <p class="text-sm text-white/70 max-w-xs">
+            Find the best travel deals across flights, hotels and cabs.
+          </p>
+
+          <div class="flex items-center gap-3 mt-2">
+          <a aria-label="Facebook" href="https://www.facebook.com/share/1BkpRiowvt/?mibextid=wwXIfr" class="p-2 rounded-full bg-white/5 hover:bg-white/10 transition">
+            <!-- Facebook svg -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 10-11.5 9.87v-6.99h-2.3v-2.88h2.3V9.41c0-2.28 1.35-3.54 3.43-3.54 .99 0 2.03.18 2.03.18v2.24h-1.14c-1.12 0-1.47.7-1.47 1.41v1.69h2.5l-.4 2.88h-2.1v6.99A10 10 0 0022 12z"/></svg>
+          </a>
+          <a aria-label="Instagram" href="https://www.instagram.com/taggle.in" class="p-2 rounded-full bg-white/5 hover:bg-white/10 transition">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5zm0 2a3 3 0 00-3 3v10a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H7zm5 3.8a5.2 5.2 0 110 10.4A5.2 5.2 0 0112 7.8zm0 2a3.2 3.2 0 100 6.4 3.2 3.2 0 000-6.4zM18 6.3a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z"/></svg>
+          </a>
+          <a aria-label="X (Twitter)" href="https://x.com/Taggle_in" class="p-2 rounded-full bg-white/5 hover:bg-white/10 transition">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M22 5.92c-.65.3-1.35.5-2.08.6a3.63 3.63 0 001.6-1.98 7.35 7.35 0 01-2.32.9 3.66 3.66 0 00-6.24 3.34A10.4 10.4 0 013 4.87a3.66 3.66 0 001.13 4.88 3.6 3.6 0 01-1.66-.46v.05a3.66 3.66 0 002.94 3.58c-.37.1-.76.14-1.16.14-.28 0-.56-.03-.82-.08a3.66 3.66 0 003.41 2.54A7.34 7.34 0 012 19.54a10.36 10.36 0 005.6 1.64c6.73 0 10.41-5.58 10.41-10.41v-.47c.72-.52 1.33-1.16 1.82-1.9z"/></svg>
+          </a>
+        </div>
+        </div>
+
+        <div>
+          <h4 class="text-sm font-semibold">Explore</h4>
+          <ul class="mt-4 space-y-2 text-sm text-white/70">  
+            <li><a href="hotels.html" class="hover:text-white">Hotels</a></li>
+            <li><a href="flights.html" class="hover:text-white">Flights</a></li>
+            <li><a href="cabs.html" class="hover:text-white">cabs</a></li>
+
+          </ul>
+        </div>
+
+
+        <div>
+          <h4 class="text-sm font-semibold">Support</h4>
+          <ul class="mt-4 space-y-2 text-sm text-white/70">
+            <li><a href="contact.html" class="hover:text-white">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <div><!-- empty placeholder if needed --></div>
+      </div>
+
+     <div class="mt-10 border-t border-white/6 pt-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <p class="text-xs text-white/60">© <span id="year"></span> TAGGLE — All rights reserved.</p>
+      <div class="flex items-center gap-4 text-xs text-white/60">
+        <a href="terms.html" class="hover:text-white">Terms</a>
+        <span class="hidden md:inline">•</span>
+        <a href="privacy.html" class="hover:text-white">Privacy</a>
+        <span class="hidden md:inline">•</span>
+        <a href="sitemap.html" class="hover:text-white">Sitemap</a>
+      </div>
+    </div>
+    </div>
+
+  <!-- Small scripts -->
+  <button id="backToTop" aria-label="Back to top" class="fixed right-6 bottom-24 hidden h-11 w-11 rounded-full bg-white/6 backdrop-blur hover:bg-white/10 transition-shadow shadow-lg">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 m-auto" viewBox="0 0 24 24" fill="currentColor"><path d="M12 5l-7 7h4v7h6v-7h4z"/></svg>
+  </button>
+
+  <script>
+    // set dynamic year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // newsletter removed (HTML removed)
+
+
+    // back to top behavior
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) backToTop.classList.remove('hidden');
+      else backToTop.classList.add('hidden');
+    });
+    backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+
+  <!-- Mobile menu script -->
+  <script>
+    const toggle = document.getElementById('navToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    if (toggle && mobileMenu) {
+      toggle.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+    }
+  </script>
+  <script>
+/* ================= AIRLINE MASTER DATA ================= */
+
+const airlineNames = {
+  AI: "Air India",
+  UK: "Vistara",
+  SG: "SpiceJet",
+  IX: "Air India Express",
+  EY: "Etihad Airways",
+  QR: "Qatar Airways",
+  EK: "Emirates",
+  BA: "British Airways",
+  VS: "Virgin Atlantic",
+  KU: "Kuwait Airways",
+  SV: "Saudia",
+  UL: "SriLankan Airlines",
+  KC: "Air Astana",
+  WY: "Oman Air",
+  BR: "EVA Air",
+  LH: "Lufthansa",
+  ET: "Ethiopian Airlines",
+  TG: "Thai Airways",
+  CX: "Cathay Pacific",
+  KL: "KLM Royal Dutch Airlines",
+  AF: "Air France",
+  KQ: "Kenya Airways",
+  SQ: "Singapore Airlines",
+  QF: "Qantas",
+  GF: "Gulf Air",
+  RJ: "Royal Jordanian",
+  MS: "EgyptAir",
+};
+function getAirlineLogo(code) {
+  return `https://content.airhex.com/content/logos/airlines_${code}_200_200_s.png`;
+}
+async function loadAirlineNames() {
+  const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+
+  const res = await fetch(
+    "https://YOUR_PROJECT_ID.supabase.co/functions/v1/get-airlines",
+    {
+      headers: {
+        "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
+        "apikey": SUPABASE_ANON_KEY
+      }
+    }
+  );
+
+  const data = await res.json();
+
+  data.data.forEach(airline => {
+    airlineNameMap[airline.iataCode] =
+      airline.commonName || airline.businessName;
+  });
+}
+
+async function searchFlights() {
+  const from = document.getElementById("from").value.trim().toUpperCase();
+  const to = document.getElementById("to").value.trim().toUpperCase();
+  const date = document.getElementById("departure").value;
+
+ const returnDate = document.getElementById("returnDate").value;
+
+if (!from) {
+  showToast("Please enter departure location ✈️", "error");
+  return;
+}
+
+if (!to) {
+  showToast("Please enter destination location 🌍", "error");
+  return;
+}
+
+if (!date) {
+  showToast("Please select departure date 📅", "error");
+  return;
+}
+  document
+  .getElementById("availableFlightsSection")
+  .classList.remove("hidden");
+
+
+  const resultsDiv = document.getElementById("flightResults");
+  resultsDiv.innerHTML = "<p class='text-white/70'>Searching flights...</p>";
+
+  try {
+    const SUPABASE_ANON_KEY = "YOUR_ANON_KEY";
+
+    const res = await fetch(
+      `https://dorjfmsahrfoaulbkxyp.supabase.co/functions/v1/get-flights?from=${from}&to=${to}&date=${date}`,
+      {
+        headers: {
+          Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+          apikey: SUPABASE_ANON_KEY,
+        },
+      }
+    );
+
+    const data = await res.json();
+
+    const airlineMap = {};
+
+data.data.forEach(flight => {
+  const segment = flight.itineraries[0].segments[0];
+  const carrier = segment.carrierCode;   // e.g. EK, SQ, GF
+  const price = Math.round(flight.price.total * 90); // EUR → INR
+
+  if (!airlineMap[carrier] || price < airlineMap[carrier]) {
+    airlineMap[carrier] = price;
+  }
+});
+
+   const airlines = Object.entries(airlineMap)
+  .map(([carrier, price]) => ({ carrier, price }))
+  .sort((a, b) => a.price - b.price);
+
+   resultsDiv.innerHTML = "";
+
+airlines.forEach((item, index) => {
+  const airlineName = airlineNames[item.carrier] || item.carrier;
+const logoUrl = getAirlineLogo(item.carrier);
+
+  resultsDiv.innerHTML += `
+  <div class="bg-white/5 border border-white/10 rounded-2xl p-5 card-hover">
+
+    <div class="flex items-center gap-3 mb-2">
+      <img src="${logoUrl}"
+           onerror="this.style.display='none'"
+           class="h-10 w-10 bg-white rounded-full p-1">
+
+      <div>
+        <h3 class="text-lg font-semibold">${airlineName}</h3>
+        <p class="text-sm text-white/60">${from} → ${to}</p>
+      </div>
+    </div>
+
+    <p class="text-2xl font-bold text-yellow-400">
+      ₹ ${item.price}
+      ${index === 0 ? "<span class='text-green-400 text-sm font-semibold'>Cheapest</span>" : ""}
+    </p>
+
+    <button
+  onclick="redirectToAirline('${item.carrier}')"
+  class="mt-4 w-full rounded-xl bg-yellow-400 py-2 text-black font-semibold">
+  Select Flight
+</button>
+
+  </div>
+`;
+});
+// Smooth scroll to results
+document.getElementById("availableFlightsSection")
+  .scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+
+
+  } catch (err) {
+    console.error(err);
+    resultsDiv.innerHTML = "<p>Error fetching flights.</p>";
+  }
+}
+</script>
+<script>
+/* ---------------- AIRLINE HELPERS ---------------- */
+
+// cache to avoid repeated calls
+const airlineCache = {};
+
+// get airline full name dynamically
+async function getAirlineName(code) {
+  if (airlineCache[code]) return airlineCache[code];
+
+  try {
+    const res = await fetch(
+      `https://api.aviationstack.com/v1/airlines?iata_code=${code}&access_key=YOUR_API_KEY`
+    );
+    const json = await res.json();
+
+    const name = json.data?.[0]?.airline_name || code;
+    airlineCache[code] = name;
+    return name;
+  } catch (e) {
+    return code; // fallback
+  }
+}
+
+// get airline logo dynamically
+function getAirlineLogo(code) {
+  return `https://content.airhex.com/content/logos/airlines_${code}_200_200_s.png`;
+}
+</script>
+<script>
+/* ================= AIRLINE → WEBSITE MAP ================= */
+
+const airlineWebsites = {
+  AI: "https://www.airindia.com",
+  UK: "https://www.airvistara.com",
+  SG: "https://www.spicejet.com",
+  IX: "https://www.airindiaexpress.com",
+  EY: "https://www.etihad.com",
+  QR: "https://www.qatarairways.com",
+  EK: "https://www.emirates.com",
+  BA: "https://www.britishairways.com",
+  VS: "https://www.virginatlantic.com",
+  KU: "https://www.kuwaitairways.com",
+  SV: "https://www.saudia.com",
+  UL: "https://www.srilankan.com",
+  KC: "https://airastana.com",
+  WY: "https://www.omanair.com",
+  BR: "https://www.evaair.com",
+  LH: "https://www.lufthansa.com",
+  ET: "https://www.ethiopianairlines.com",
+  TG: "https://www.thaiairways.com",
+  CX: "https://www.cathaypacific.com",
+  KL: "https://www.klm.com",
+  AF: "https://www.airfrance.com",
+  KQ: "https://www.kenya-airways.com",
+  SQ: "https://www.singaporeair.com",
+  QF: "https://www.qantas.com",
+  GF: "https://www.gulfair.com",
+  RJ: "https://www.rj.com",
+  MS: "https://www.egyptair.com"
+};
+
+/* ================= REDIRECT HANDLER ================= */
+
+function redirectToAirline(carrierCode) {
+  const url = airlineWebsites[carrierCode];
+
+  if (!url) {
+    alert("Official airline website not available.");
+    return;
+  }
+
+  window.open(url, "_blank", "noopener,noreferrer");
+}
+</script>
+<div id="toastContainer"
+     class="fixed inset-0 z-50 flex items-start justify-center pointer-events-none pt-16">
+</div>
+
+<script>
+function showToast(message, type = "error") {
+  const container = document.getElementById("toastContainer");
+
+  const toast = document.createElement("div");
+
+  toast.className = `
+    px-8 py-4
+    rounded-2xl
+    text-sm font-semibold
+    backdrop-blur-xl
+    border
+    animate-fade-in
+    ${type === "error"
+      ? "bg-[#6b2d33]/90 border-red-400 text-white"
+      : "bg-green-900/80 border-green-400 text-white"}
+  `;
+
+  toast.textContent = message;
+
+  container.innerHTML = "";
+  container.appendChild(toast);
+
+  setTimeout(() => {
+    toast.classList.add("opacity-0");
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
+}
+</script>
+</body>
+</html>

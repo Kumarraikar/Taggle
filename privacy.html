@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TAGGLE — Privacy Policy</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { 600: "#288a77" }
+          },
+          fontFamily: {
+            sans: ["Inter", "system-ui"],
+            display: ["Fraunces", "Georgia", "serif"]
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Fade Animation -->
+  <style>
+    .fade-in {
+      opacity: 0;
+      transform: translateY(8px);
+      animation: fadeIn 0.7s ease forwards;
+    }
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+
+</head>
+
+<body class="bg-gradient-to-b from-black via-[#0d1b2a] to-[#1b263b] text-white min-h-screen">
+
+<!-- NAVBAR -->
+<header class="w-full bg-[#0a192f]/80 backdrop-blur">
+    <nav class="w-full">
+      <div class="mx-auto w-full px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between py-5">
+          <!-- Logo -->
+          <a href="combine.html" class="flex items-center gap-2">
+            <span class="text-2xl font-bold text-white">TAGGLE</span>
+          </a>
+
+          <!-- Desktop menu -->
+          <ul class="hidden md:flex items-center gap-7 text-sm">
+            <li><a class="text-white/80 hover:text-white transition" href="combine.html">Home</a></li>
+            <li><a class="text-white/80 hover:text-white transition" href="hotels.html">Hotels</a></li>
+            <li><a class="text-white/80 hover:text-white transition" href="flights.html">Flights</a></li>
+            <li><a class="text-white/80 hover:text-white transition" href="cabs.html">Cabs</a></li>
+          </ul>
+
+          <!-- Right side (About / Contact / Profile) -->
+          <!-- Right side (About, Contact, Profile) -->
+<div class="hidden md:flex items-center gap-6 text-sm">
+  <!-- Normal About link -->
+  <a class="text-white/80 hover:text-white transition" href="about.html">
+    About Us
+  </a>
+
+  <!-- Contact link with dot in front -->
+  <div class="flex items-center gap-2">
+    <a class="text-white/80 hover:text-white transition" href="contact.html">
+      Contact Us
+    </a>
+  </div>
+
+  <!-- Profile button -->
+  <a href="profile.html"
+   class="p-2 rounded-full bg-white/10 hover:bg-white/20 transition"
+   aria-label="Profile">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+       viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"
+      d="M5.121 17.804A12 12 0 0112 15c2.577 0 4.956.81 6.879 2.196M15 10a3 3 0 11-6 0 3 3 0 016 0z"/>
+  </svg>
+</a>
+</div>
+
+
+          <!-- Mobile toggle -->
+          <button id="navToggle" class="md:hidden p-2 rounded-md bg-white/10 hover:bg-white/20" aria-label="Open menu">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Mobile menu -->
+        <div id="mobileMenu" class="md:hidden hidden border-t border-white/10 pt-4 pb-6">
+          <div class="grid gap-3 text-sm">
+            <a class="text-white/90" href="combine.html">Home</a>
+            <a class="text-white/80" href="hotels.html">Hotels</a>
+            <a class="text-white/80" href="flights.html">Flights</a>
+            <a class="text-white/80" href="cabs.html">Cabs</a>
+            <a class="text-white/80" href="about.html">About Us</a>
+            <a class="text-yellow-300" href="contact.html">Contact Us</a>
+            <a class="text-white/80" href="login.html">Login</a>
+            <a class="text-white/80" href="signup.html">Sign Up</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+<!-- MAIN CONTENT -->
+<main class="max-w-5xl mx-auto px-6 py-16">
+
+  <!-- Page Title -->
+  <h1  style="font-family: 'Baskerville', serif;" class="font-display text-4xl sm:text-5xl lg:text-6xl leading-tight text-white tracking-normal fade-in mt-0 text-center">Privacy Policy</h1>
+
+  <p class="text-center text-white/70 fade-in mb-12">
+    Your privacy is important to us. This notice explains how TAGGLE handles your personal information.
+  </p>
+
+  <!-- CARD BLOCK -->
+  <section class="bg-white/5 border border-white/10 rounded-3xl p-8 shadow-xl fade-in space-y-8">
+
+    <!-- Introduction -->
+    <div>
+      <h2 class="text-2xl font-semibold mb-3">Introduction</h2>
+      <p class="text-white/70 leading-relaxed">
+        We collect and process your personal information when you use our platform for booking flights, hotels, or cabs.
+        Your data is handled securely and only for legitimate purposes to provide you with a smooth booking experience.
+      </p>
+    </div>
+
+    <!-- Topics -->
+    <div>
+      <h2 class="text-2xl font-semibold mb-3">Topics covered</h2>
+
+      <ul class="list-decimal ml-6 space-y-2 text-white/80">
+        <li>Legal basis for processing your information</li>
+        <li>What information we collect</li>
+        <li>How we collect your information</li>
+        <li>How we use your information</li>
+        <li>Retention of your information</li>
+        <li>How we ensure data security</li>
+        <li>Your data rights</li>
+        <li>Information regarding minors</li>
+        <li>Transfer of data overseas</li>
+        <li>Links to external websites</li>
+      </ul>
+    </div>
+
+    <!-- Sample Section -->
+    <div>
+      <h2 class="text-2xl font-semibold mb-3">1. Legal basis for processing your information</h2>
+      <p class="text-white/70 leading-relaxed">
+        We process personal information under applicable data protection laws such as for fulfilling services,
+        public interest, legitimate business needs, and compliance with legal obligations.
+      </p>
+    </div>
+    <!-- SECTION 2 -->
+<h2 class="text-2xl font-semibold mt-10 mb-4">2. What information we collect</h2>
+<p class="text-white/80 leading-relaxed">
+  We collect Personal Information such as your name, contact details, email address,
+  travel preferences,payment information, and any details you
+  provide while using our services. This may also include technical data such as
+  IP address, device information, browser type, and interaction logs on our platform.
+</p>
+
+<!-- SECTION 3 -->
+<h2 class="text-2xl font-semibold mt-10 mb-4">3. How we collect your information</h2>
+<p class="text-white/80 leading-relaxed">
+  We collect information directly from you when you use our website,
+  booking forms, customer support, or while interacting with our services. We may
+  also collect data automatically through cookies, analytics tools, and third-party
+  service providers.
+</p>
+
+<!-- SECTION 4 -->
+<h2 class="text-2xl font-semibold mt-10 mb-4">4. How we use your information</h2>
+<p class="text-white/80 leading-relaxed">
+  Your information is used to complete bookings, manage your travel, personalize
+  your experience, provide customer support, send updates, improve our services,
+  and comply with legal or security requirements.
+</p>
+
+<!-- SECTION 5 -->
+<h2 class="text-2xl font-semibold mt-10 mb-4">5. Retention of your information</h2>
+<p class="text-white/80 leading-relaxed">
+  We retain your Personal Information only for as long as necessary to fulfill the
+  purposes outlined in this policy—typically for regulatory, operational, and legal
+  requirements. Once no longer needed, your data is securely deleted or anonymized.
+</p>
+
+<!-- SECTION 6 -->
+<h2 class="text-2xl font-semibold mt-10 mb-4">6. How we ensure data security</h2>
+<p class="text-white/80 leading-relaxed">
+  Your information is protected through encryption, secure servers, restricted
+  access, and continuous monitoring. We follow industry-standard security measures
+  to prevent unauthorized access, misuse, alteration, or exposure of your data.
+</p>
+<!-- SECTION 8 -->
+<h2 class="text-2xl font-semibold mt-10 mb-4">7. Your data rights</h2>
+<p class="text-white/80 leading-relaxed">
+  You have the right to access, update, correct, delete, or restrict the use of your
+  Personal Information. You may also request data portability or withdraw consent
+  at any time, subject to applicable laws.
+</p>
+
+<!-- SECTION 9 -->
+<h2 class="text-2xl font-semibold mt-10 mb-4">8. Information regarding minors</h2>
+<p class="text-white/80 leading-relaxed">
+  Our services are not intended for children under 18. We do not knowingly collect
+  Personal Information from minors. If data is collected accidentally, it will be
+  deleted promptly upon request.
+</p>
+
+<!-- SECTION 10 -->
+<h2 class="text-2xl font-semibold mt-10 mb-4">9. Transfer of data overseas</h2>
+<p class="text-white/80 leading-relaxed">
+  Your information may be processed or stored in servers located outside your
+  country. We ensure that such transfers comply with applicable data protection
+  laws and that your data remains protected at all times.
+</p>
+
+<!-- SECTION 11 -->
+<h2 class="text-2xl font-semibold mt-10 mb-4">10. Links to external websites</h2>
+<p class="text-white/80 leading-relaxed">
+  Our platform may contain links to third-party websites. We are not responsible
+  for the privacy practices or content of these external sites. Please review their
+  policies before sharing any information.
+</p>
+  </section>
+</main>
+
+<!-- FOOTER -->
+ <footer class="bg-gradient-to-t from-[#071023] via-[#071826] to-transparent text-white mt-12 w-full">
+    <div class="mx-auto max-w-7xl px-6 py-12 lg:py-16">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <!-- Brand + short pitch -->
+        <div class="space-y-4">
+          <a href="combine.html" class="inline-flex items-center gap-3">
+            <div class="h-10 w-10 rounded-full bg-brand-600 flex items-center justify-center shadow-md">
+              <span class="font-bold">T</span>
+            </div>
+            <div>
+              <div class="text-xl font-extrabold tracking-tight">TAGGLE</div>
+              <div class="text-xs text-white/60">Travel & Compare Prices</div>
+            </div>
+          </a>
+
+          <p class="text-sm text-white/70 max-w-xs">
+            Find the best travel deals across flights, hotels and cabs. Real-time price updates, hand-picked partners, and a simple booking experience.
+          </p>
+
+          <div class="flex items-center gap-3 mt-2">
+            <a aria-label="Facebook" href="https://www.facebook.com/share/1BkpRiowvt/?mibextid=wwXIfr" class="p-2 rounded-full bg-white/5 hover:bg-white/10 transition">
+              <!-- Facebook svg -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 10-11.5 9.87v-6.99h-2.3v-2.88h2.3V9.41c0-2.28 1.35-3.54 3.43-3.54 .99 0 2.03.18 2.03.18v2.24h-1.14c-1.12 0-1.47.7-1.47 1.41v1.69h2.5l-.4 2.88h-2.1v6.99A10 10 0 0022 12z"/></svg>
+            </a>
+            <a aria-label="Instagram" href="https://www.instagram.com/taggle.in" class="p-2 rounded-full bg-white/5 hover:bg-white/10 transition">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5zm0 2a3 3 0 00-3 3v10a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H7zm5 3.8a5.2 5.2 0 110 10.4A5.2 5.2 0 0112 7.8zm0 2a3.2 3.2 0 100 6.4 3.2 3.2 0 000-6.4zM18 6.3a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z"/></svg>
+            </a>
+            <a aria-label="X (Twitter)" href="https://x.com/Taggle_in" class="p-2 rounded-full bg-white/5 hover:bg-white/10 transition">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M22 5.92c-.65.3-1.35.5-2.08.6a3.63 3.63 0 001.6-1.98 7.35 7.35 0 01-2.32.9 3.66 3.66 0 00-6.24 3.34A10.4 10.4 0 013 4.87a3.66 3.66 0 001.13 4.88 3.6 3.6 0 01-1.66-.46v.05a3.66 3.66 0 002.94 3.58c-.37.1-.76.14-1.16.14-.28 0-.56-.03-.82-.08a3.66 3.66 0 003.41 2.54A7.34 7.34 0 012 19.54a10.36 10.36 0 005.6 1.64c6.73 0 10.41-5.58 10.41-10.41v-.47c.72-.52 1.33-1.16 1.82-1.9z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Explore links -->
+        <div>
+          <h4 class="text-sm font-semibold">Explore</h4>
+          <ul class="mt-4 space-y-2 text-sm text-white/70">  
+            <li><a href="hotels.html" class="hover:text-white">Hotels</a></li>
+            <li><a href="flights.html" class="hover:text-white">Flights</a></li>
+            <li><a href="cabs.html" class="hover:text-white">cabs</a></li>
+
+          </ul>
+        </div>
+
+
+        <!-- Support links -->
+        <div>
+          <h4 class="text-sm font-semibold">Support</h4>
+          <ul class="mt-4 space-y-2 text-sm text-white/70">
+            <li><a href="contact.html" class="hover:text-white">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <!-- Extra column left empty / for future content -->
+        <div></div>
+      </div>
+
+      <!-- Divider -->
+      <div class="mt-10 border-t border-white/6 pt-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <p class="text-xs text-white/60">© <span id="year"></span> TAGGLE — All rights reserved.</p>
+        <div class="flex items-center gap-4 text-xs text-white/60">
+          <a href="terms.html" class="hover:text-white">Terms</a>
+          <span class="hidden md:inline">•</span>
+          <a href="privacy.html" class="hover:text-white">Privacy</a>
+          <span class="hidden md:inline">•</span>
+          <a href="sitemap.html" class="hover:text-white">Sitemap</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Back to top button -->
+    <button id="backToTop" aria-label="Back to top" class="fixed right-6 bottom-24 hidden h-11 w-11 rounded-full bg-white/6 backdrop-blur hover:bg-white/10 transition-shadow shadow-lg">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 m-auto" viewBox="0 0 24 24" fill="currentColor"><path d="M12 5l-7 7h4v7h6v-7h4z"/></svg>
+    </button>
+
+    <script>
+      // set dynamic year
+      document.getElementById('year').textContent = new Date().getFullYear();
+
+      // back to top behavior
+      const backToTop = document.getElementById('backToTop');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) backToTop.classList.remove('hidden');
+        else backToTop.classList.add('hidden');
+      });
+      backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+      // stagger fade-in animation
+      document.addEventListener('DOMContentLoaded', () => {
+        const items = document.querySelectorAll('.fade-in');
+        items.forEach((el, i) => {
+          el.style.animationDelay = (i * 120) + 'ms';
+        });
+      });
+    </script>
+  </footer>
+
+  <script>
+    const toggle = document.getElementById('navToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    toggle?.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+  </script>
+
+</body>
+</html>

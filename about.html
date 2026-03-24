@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TAGGLE — About Us</title>
+
+  <!-- Tailwind via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50:  '#f0f9f6',
+              100: '#d9f2ea',
+              200: '#b7e6d8',
+              300: '#88d5c2',
+              400: '#5fc2aa',
+              500: '#3aa992',
+              600: '#288a77',
+              700: '#216e61',
+              800: '#1f574f',
+              900: '#1d4742',
+            },
+          },
+          boxShadow: {
+            card: '0 15px 35px rgba(0,0,0,.25)',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'ui-sans-serif', 'Helvetica', 'Arial'],
+            display: ['Fraunces', 'Georgia', 'ui-serif', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Simple CSS animation -->
+  <style>
+    /* fade-in and slide-up animation */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in-up {
+      opacity: 0;
+      animation: fadeInUp 0.8s ease-out forwards;
+    }
+
+    .delay-1 {
+      animation-delay: 0.2s;
+    }
+
+    .delay-2 {
+      animation-delay: 0.4s;
+    }
+  </style>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Fraunces:opsz,wght@9..144,700;9..144,800;9..144,900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Simple favicon -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23288977'/%3E%3Ctext x='50' y='62' font-size='54' text-anchor='middle' fill='white' font-family='Arial'%3ET%3C/text%3E%3C/svg%3E">
+</head>
+
+<body class="min-h-screen bg-gradient-to-b from-black via-[#0d1b2a] to-[#1b263b] text-white antialiased flex flex-col">
+  <!-- HEADER (same style as other pages) -->
+  <header class="w-full bg-[#0a192f]/80 backdrop-blur">
+    <nav class="w-full">
+      <div class="mx-auto w-full px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between py-5">
+          <!-- Logo -->
+          <a href="combine.html" class="flex items-center gap-2">
+            <span class="text-2xl font-bold text-white">TAGGLE</span>
+          </a>
+
+          <!-- Desktop menu -->
+          <ul class="hidden md:flex items-center gap-7 text-sm">
+            <li><a class="text-white/80 hover:text-white transition" href="combine.html">Home</a></li>
+            <li><a class="text-white/80 hover:text-white transition" href="hotels.html">Hotels</a></li>
+            <li><a class="text-white/80 hover:text-white transition" href="flights.html">Flights</a></li>
+            <li><a class="text-white/80 hover:text-white transition" href="cabs.html">Cabs</a></li>
+            <!-- Active page -->
+           
+          </ul>
+           
+          <!-- Right side (Login button example) -->
+           <!-- Right side (About, Contact, Profile) -->
+<div class="hidden md:flex items-center gap-6 text-sm">
+  <!-- Normal About link -->
+   <li class="flex items-center gap-2 relative">
+    <span class="w-2 h-2 bg-white rounded-full"></span>
+    <a href="about.html" class="text-white/80 hover:text-white transition relative after:block after:h-[2px] after:w-full after:bg-yellow-400 after:mt-1">
+        About Us
+    </a>
+</li>
+
+
+  <!-- Contact link with dot in front -->
+  <div class="flex items-center gap-2">
+    <!-- the dot -->
+    <!-- the actual link -->
+    <a class="text-white/80 hover:text-white transition" href="contact.html">
+      Contact Us
+    </a>
+  </div>
+
+  <!-- Profile button -->
+  <a href="profile.html"
+   class="p-2 rounded-full bg-white/10 hover:bg-white/20 transition"
+   aria-label="Profile">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+       viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"
+      d="M5.121 17.804A12 12 0 0112 15c2.577 0 4.956.81 6.879 2.196M15 10a3 3 0 11-6 0 3 3 0 016 0z"/>
+  </svg>
+</a>
+</div>
+
+
+        <!-- Mobile menu -->
+        <div id="mobileMenu" class="md:hidden hidden border-t border-white/10 pt-4 pb-6">
+          <div class="grid gap-3 text-sm">
+            <a class="text-white/90" href="combine.html">Home</a>
+            <a class="text-white/80" href="hotels.html">Hotels</a>
+            <a class="text-white/80" href="flights.html">Flights</a>
+            <a class="text-white/80" href="cabs.html">Cabs</a>
+            <a class="text-yellow-300" href="about.html">About Us</a>
+            <a class="text-white/80" href="contact.html">Contact Us</a>
+            <a class="text-white/80" href="login.html">Login</a>
+            <a class="text-white/80" href="signup.html">Sign Up</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- MAIN -->
+  <main class="flex-1 flex items-center py-8">
+    <section class="w-full">
+      <div class="mx-auto w-full px-4 sm:px-6 lg:px-8 grid gap-10 md:grid-cols-2 items-center">
+        <!-- LEFT TEXT SIDE (animated) -->
+        <div class="space-y-6 max-w-xl fade-in-up delay-1">
+          <p class="text-xs tracking-[0.35em] text-yellow-300 uppercase">A bit</p>
+          <h1 style="font-family: 'Baskerville', serif;" class="font-display text-4xl sm:text-5xl lg:text-6xl leading-tight text-white tracking-normal fade-in">About Us</h1>
+          <p class="text-sm sm:text-base text-white/80 leading-relaxed">
+            At Taggle, we make booking easy by comparing prices on hotels, flights,
+            and cabs across trusted platforms. Our mission is to bring you transparency,
+            savings, and confidence in every trip. With real-time data, finding the
+            best deal is quick and effortless.
+          </p>
+          <p class="text-sm sm:text-base text-white/70 leading-relaxed">
+            Whether you are planning a weekend getaway or a long international journey,
+            Taggle helps you discover new places, smart routes, and pocket-friendly options
+            so you can focus on making memories, not managing tabs.
+          </p>
+        </div>
+
+        <!-- RIGHT IMAGE SIDE (animated) -->
+        <div class="grid grid-cols-2 gap-4 md:gap-6 items-center fade-in-up delay-2">
+
+          <!-- Top wide image -->
+          <figure class="col-span-2 rounded-3xl overflow-hidden shadow-card h-44 sm:h-56 transition-transform duration-300 hover:scale-[1.02]">
+            <img src="https://images.unsplash.com/photo-1524592714635-d77511a4834d?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                 alt="Traveler looking at mountains"
+                 class="h-full w-full object-cover" />
+          </figure>
+
+          <!-- Bottom left card -->
+          <figure class="rounded-3xl overflow-hidden shadow-card h-40 sm:h-44 transition-transform duration-300 hover:scale-[1.03]">
+            <img src="https://images.unsplash.com/photo-1584132967334-10e028bd69f7?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                 alt="Colorful coastal town"
+                 class="h-full w-full object-cover" />
+          </figure>
+
+          <!-- Bottom right card -->
+          <div class="relative h-40 sm:h-44 rounded-3xl overflow-hidden shadow-card transition-transform duration-300 hover:scale-[1.03]">
+            <img src="https://plus.unsplash.com/premium_photo-1729936564623-147c3d6d0bd9?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                 alt="People hiking"
+                 class="h-full w-full object-cover" />
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER (simple) -->
+  <footer class="bg-gradient-to-t from-[#071023] via-[#071826] to-transparent text-white mt-12 w-full">
+  <div class="mx-auto max-w-7xl px-6 py-12 lg:py-16">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      <!-- Brand + short pitch -->
+      <div class="space-y-4">
+        <a href="combine.html" class="inline-flex items-center gap-3">
+          <div class="h-10 w-10 rounded-full bg-brand-600 flex items-center justify-center shadow-md">
+            <span class="font-bold">T</span>
+          </div>
+          <div>
+            <div class="text-xl font-extrabold tracking-tight">TAGGLE</div>
+            <div class="text-xs text-white/60">Travel & Compare Prices</div>
+          </div>
+        </a>
+
+        <p class="text-sm text-white/70 max-w-xs">
+          Find the best travel deals across flights, hotels and cabs. Real-time price updates, hand-picked partners, and a simple booking experience.
+        </p>
+
+        <div class="flex items-center gap-3 mt-2">
+          <a aria-label="Facebook" href="https://www.facebook.com/share/1BkpRiowvt/?mibextid=wwXIfr" class="p-2 rounded-full bg-white/5 hover:bg-white/10 transition">
+            <!-- Facebook svg -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 10-11.5 9.87v-6.99h-2.3v-2.88h2.3V9.41c0-2.28 1.35-3.54 3.43-3.54 .99 0 2.03.18 2.03.18v2.24h-1.14c-1.12 0-1.47.7-1.47 1.41v1.69h2.5l-.4 2.88h-2.1v6.99A10 10 0 0022 12z"/></svg>
+          </a>
+          <a aria-label="Instagram" href="https://www.instagram.com/taggle.in" class="p-2 rounded-full bg-white/5 hover:bg-white/10 transition">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5zm0 2a3 3 0 00-3 3v10a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H7zm5 3.8a5.2 5.2 0 110 10.4A5.2 5.2 0 0112 7.8zm0 2a3.2 3.2 0 100 6.4 3.2 3.2 0 000-6.4zM18 6.3a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z"/></svg>
+          </a>
+          <a aria-label="X (Twitter)" href="https://x.com/Taggle_in" class="p-2 rounded-full bg-white/5 hover:bg-white/10 transition">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M22 5.92c-.65.3-1.35.5-2.08.6a3.63 3.63 0 001.6-1.98 7.35 7.35 0 01-2.32.9 3.66 3.66 0 00-6.24 3.34A10.4 10.4 0 013 4.87a3.66 3.66 0 001.13 4.88 3.6 3.6 0 01-1.66-.46v.05a3.66 3.66 0 002.94 3.58c-.37.1-.76.14-1.16.14-.28 0-.56-.03-.82-.08a3.66 3.66 0 003.41 2.54A7.34 7.34 0 012 19.54a10.36 10.36 0 005.6 1.64c6.73 0 10.41-5.58 10.41-10.41v-.47c.72-.52 1.33-1.16 1.82-1.9z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Explore links -->
+      <div>
+          <h4 class="text-sm font-semibold">Explore</h4>
+          <ul class="mt-4 space-y-2 text-sm text-white/70">  
+            <li><a href="hotels.html" class="hover:text-white">Hotels</a></li>
+            <li><a href="flights.html" class="hover:text-white">Flights</a></li>
+            <li><a href="cabs.html" class="hover:text-white">cabs</a></li>
+
+          </ul>
+        </div>
+
+
+      <!-- Support links -->
+      <div>
+        <h4 class="text-sm font-semibold">Support</h4>
+        <ul class="mt-4 space-y-2 text-sm text-white/70">
+          <li><a href="contact.html" class="hover:text-white">Contact Us</a></li>
+        </ul>
+      </div>
+
+      <!-- Newsletter column removed per user request -->
+    </div>
+
+    <!-- Divider -->
+    <div class="mt-10 border-t border-white/6 pt-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <p class="text-xs text-white/60">© <span id="year"></span> TAGGLE — All rights reserved.</p>
+      <div class="flex items-center gap-4 text-xs text-white/60">
+        <a href="terms.html" class="hover:text-white">Terms</a>
+        <span class="hidden md:inline">•</span>
+        <a href="privacy.html" class="hover:text-white">Privacy</a>
+        <span class="hidden md:inline">•</span>
+        <a href="sitemap.html" class="hover:text-white">Sitemap</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Back to top button -->
+  <button id="backToTop" aria-label="Back to top" class="fixed right-6 bottom-24 hidden h-11 w-11 rounded-full bg-white/6 backdrop-blur hover:bg-white/10 transition-shadow shadow-lg">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 m-auto" viewBox="0 0 24 24" fill="currentColor"><path d="M12 5l-7 7h4v7h6v-7h4z"/></svg>
+  </button>
+
+  <script>
+    // set dynamic year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // newsletter removed (HTML removed)
+
+
+    // back to top behavior
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) backToTop.classList.remove('hidden');
+      else backToTop.classList.add('hidden');
+    });
+    backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+</footer>
+  <!-- Mobile menu script -->
+  <script>
+    const toggle = document.getElementById('navToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    if (toggle && mobileMenu) {
+      toggle.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+    }
+  </script>
+</body>
+</html>
